@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using StreamVaultAdmin.Data;
+using StreamVaultAdmin.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add MVC services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<CatalogueService>();
 
 // Add database context service to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
