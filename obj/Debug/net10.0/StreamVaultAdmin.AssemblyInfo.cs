@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StreamVaultAdmin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b1488f28b9e655ac889fa2168b6a299828e06a32")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7079e3c310af06cb80f6f4f813d8db39e842bb97")]
 [assembly: System.Reflection.AssemblyProductAttribute("StreamVaultAdmin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StreamVaultAdmin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
