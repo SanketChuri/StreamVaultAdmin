@@ -1,29 +1,42 @@
+using Microsoft.EntityFrameworkCore;
+using StreamVaultAdmin.Data;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add MVC services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add database context service to the container.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=streamvault.db"));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Seed the database with initial data.
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
+    DbSeeder.Seed(db);
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
-
 app.UseAuthorization();
-
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+
