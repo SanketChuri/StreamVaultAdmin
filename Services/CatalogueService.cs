@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using StreamVaultAdmin.Data;
 using StreamVaultAdmin.Models;
 
@@ -15,39 +14,50 @@ namespace StreamVaultAdmin.Services
 
         public List<ContentItem> GetAll(string? type = null, string? search = null)
         {
-            IQueryable<ContentItem> query = _db.Movies
-                .Cast<ContentItem>()
-                .Union(_db.Series.Cast<ContentItem>())
-                .Union(_db.Audiobooks.Cast<ContentItem>())
-                .Union(_db.MusicAlbums.Cast<ContentItem>());
+            var allItems = new List<ContentItem>();
+
+            allItems.AddRange(_db.Movies.ToList());
+            allItems.AddRange(_db.Series.ToList());
+            allItems.AddRange(_db.Audiobooks.ToList());
+            allItems.AddRange(_db.MusicAlbums.ToList());
 
             if (!string.IsNullOrEmpty(type))
             {
-                query = type switch
+                allItems = type switch
                 {
-                    "Movie"      => _db.Movies.Cast<ContentItem>(),
-                    "Series"     => _db.Series.Cast<ContentItem>(),
-                    "Audiobook"  => _db.Audiobooks.Cast<ContentItem>(),
-                    "MusicAlbum" => _db.MusicAlbums.Cast<ContentItem>(),
-                    _            => query
+                    "Movie"      => allItems.OfType<Movie>().Cast<ContentItem>().ToList(),
+                    "Series"     => allItems.OfType<Series>().Cast<ContentItem>().ToList(),
+                    "Audiobook"  => allItems.OfType<Audiobook>().Cast<ContentItem>().ToList(),
+                    "MusicAlbum" => allItems.OfType<MusicAlbum>().Cast<ContentItem>().ToList(),
+                    _            => allItems
                 };
             }
 
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(x => x.Title.Contains(search));
+                allItems = allItems
+                    .Where(x => x.Title.Contains(search,
+                        StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
 
-            return query.ToList();
+            return allItems;
         }
 
         public ContentItem? GetById(int id)
         {
-            return _db.Movies.Cast<ContentItem>()
-                .Union(_db.Series.Cast<ContentItem>())
-                .Union(_db.Audiobooks.Cast<ContentItem>())
-                .Union(_db.MusicAlbums.Cast<ContentItem>())
-                .FirstOrDefault(x => x.Id == id);
+            ContentItem? item = null;
+
+            item = _db.Movies.FirstOrDefault(x => x.Id == id);
+            if (item != null) return item;
+
+            item = _db.Series.FirstOrDefault(x => x.Id == id);
+            if (item != null) return item;
+
+            item = _db.Audiobooks.FirstOrDefault(x => x.Id == id);
+            if (item != null) return item;
+
+            return _db.MusicAlbums.FirstOrDefault(x => x.Id == id);
         }
 
         public void Add(ContentItem item)

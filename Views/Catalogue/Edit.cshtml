@@ -1,0 +1,137 @@
+@model StreamVaultAdmin.Models.ContentItem
+@using StreamVaultAdmin.Models
+
+@{
+    ViewData["Title"] = "Edit " + Model.Title;
+    string type = Model.ContentType;
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Edit @type</h1>
+        <a href="/Catalogue" class="btn btn-secondary">Back to Catalogue</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post" action="/Catalogue/Edit/@Model.Id">
+
+                <h5 class="mb-3">General Information</h5>
+
+                <div class="mb-3">
+                    <label class="form-label">Title *</label>
+                    <input type="text" name="Title" class="form-control"
+                           value="@Model.Title" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description *</label>
+                    <textarea name="Description" class="form-control" rows="3" required>@Model.Description</textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Release Date *</label>
+                        <input type="date" name="ReleaseDate" class="form-control"
+                               value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Age Rating *</label>
+                        <select name="AgeRating" class="form-select" required>
+                            <option value="">Select...</option>
+                            @foreach (var rating in new[] { "U", "PG", "12", "12A", "15", "18" })
+                            {
+                                <!option @(Model.AgeRating == rating ? "selected" : "")>@rating</!option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Genre *</label>
+                        <input type="text" name="Genre" class="form-control"
+                               value="@Model.Genre" required />
+                    </div>
+                </div>
+
+                <hr />
+                <h5 class="mb-3">@type Details</h5>
+
+                @if (Model is Movie movie)
+                {
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Duration (minutes) *</label>
+                            <input type="number" name="Duration" class="form-control"
+                                   value="@movie.Duration" min="1" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Director *</label>
+                            <input type="text" name="Director" class="form-control"
+                                   value="@movie.Director" required />
+                        </div>
+                    </div>
+                }
+                else if (Model is Series series)
+                {
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Number of Seasons *</label>
+                            <input type="number" name="NumberOfSeasons" class="form-control"
+                                   value="@series.NumberOfSeasons" min="1" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Total Episodes *</label>
+                            <input type="number" name="TotalEpisodes" class="form-control"
+                                   value="@series.TotalEpisodes" min="1" required />
+                        </div>
+                    </div>
+                }
+                else if (Model is Audiobook audiobook)
+                {
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Author *</label>
+                            <input type="text" name="Author" class="form-control"
+                                   value="@audiobook.Author" required />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Narrator *</label>
+                            <input type="text" name="Narrator" class="form-control"
+                                   value="@audiobook.Narrator" required />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Duration (minutes) *</label>
+                            <input type="number" name="Duration" class="form-control"
+                                   value="@audiobook.Duration" min="1" required />
+                        </div>
+                    </div>
+                }
+                else if (Model is MusicAlbum album)
+                {
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Artist *</label>
+                            <input type="text" name="Artist" class="form-control"
+                                   value="@album.Artist" required />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Track Count *</label>
+                            <input type="number" name="TrackCount" class="form-control"
+                                   value="@album.TrackCount" min="1" required />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Record Label *</label>
+                            <input type="text" name="RecordLabel" class="form-control"
+                                   value="@album.RecordLabel" required />
+                        </div>
+                    </div>
+                }
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-warning">Update</button>
+                    <a href="/Catalogue" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
