@@ -60,11 +60,11 @@ namespace StreamVaultAdmin.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: /Catalogue/Edit/1
+        // GET: /Catalogue/Edit/1?type=Movie
         // Show the edit form pre-filled with existing data
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, string type)
         {
-            var item = _service.GetById(id);
+            var item = _service.GetById(id, type);
             if (item == null) return NotFound();
             return View(item);
         }
@@ -74,7 +74,7 @@ namespace StreamVaultAdmin.Controllers
         [HttpPost]
         public IActionResult Edit(int id, IFormCollection form)
         {
-            var item = _service.GetById(id);
+            var item = _service.GetById(id, form["ContentType"]);
             if (item == null) return NotFound();
 
             item.UpdateSharedFields(form);
@@ -95,21 +95,21 @@ namespace StreamVaultAdmin.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: /Catalogue/Delete/1
+        // GET: /Catalogue/Delete/1?type=Movie
         // Show the delete confirmation page
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string type)
         {
-            var item = _service.GetById(id);
+            var item = _service.GetById(id, type);
             if (item == null) return NotFound();
             return View(item);
         }
 
-        // POST: /Catalogue/Delete/1
+        // POST: /Catalogue/Delete/1?type=Movie
         // Delete the item from the database
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id, string type)
         {
-            _service.Delete(id);
+            _service.Delete(id, type);
             return RedirectToAction("Index");
         }
 

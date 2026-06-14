@@ -56,17 +56,22 @@ namespace StreamVaultAdmin.Services
             return items;
         }
 
-        public ContentItem? GetById(int id)
+        public ContentItem? GetById(int id, string type)
         {
             ContentItem? item = null;
 
-            item = _db.Movies.FirstOrDefault(x => x.Id == id);
-            if (item != null) return item;
-
-            item = _db.Series.FirstOrDefault(x => x.Id == id);
-            if (item != null) return item;
-
-            item = _db.Audiobooks.FirstOrDefault(x => x.Id == id);
+            if (type == "Movie")
+            {
+                item = _db.Movies.FirstOrDefault(x => x.Id == id);
+            }
+            else if (type == "Series")
+            {
+                item = _db.Series.FirstOrDefault(x => x.Id == id);
+            }
+            else if (type == "Audiobook")
+            {
+                item = _db.Audiobooks.FirstOrDefault(x => x.Id == id);
+            }
             if (item != null) return item;
 
             return _db.MusicAlbums.FirstOrDefault(x => x.Id == id);
@@ -87,9 +92,9 @@ namespace StreamVaultAdmin.Services
         }
 
         // Delete item from database by id
-        public void Delete(int id)
+        public void Delete(int id, string type)
         {
-            var item = GetById(id);
+            var item = GetById(id, type);
             if (item == null) return;
 
             _db.Remove(item);
