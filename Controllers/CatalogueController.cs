@@ -43,6 +43,19 @@ namespace StreamVaultAdmin.Controllers
             item.UpdateSharedFields(form);
             item.UpdateTypeFields(form);
 
+            // Validate shared and type specific fields
+            var errors = item.ValidateSharedFields();
+            errors.AddRange(item.ValidateTypeFields());
+
+            // If errors found send back to form with error messages
+            if (errors.Any())
+            {
+                ViewBag.Errors = errors;
+                ViewBag.Type = type;
+                ViewBag.FormData = form;
+                return View();
+            }
+
             _service.Add(item);
             return RedirectToAction("Index");
         }

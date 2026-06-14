@@ -12,5 +12,21 @@ namespace StreamVaultAdmin.Models
             NumberOfSeasons = int.TryParse(form["NumberOfSeasons"], out int s) ? s : 0;
             TotalEpisodes = int.TryParse(form["TotalEpisodes"], out int e) ? e : 0;
         }
+
+        // Series knows how to validate its own fields
+        public override List<string> ValidateTypeFields()
+        {
+            var errors = new List<string>();
+
+            if (NumberOfSeasons <= 0)
+                errors.Add("Number of Seasons must be greater than 0");
+
+            if (TotalEpisodes <= 0)
+                errors.Add("Total Episodes must be greater than 0");
+
+            return errors;
+        }
     }
+
+    
 }

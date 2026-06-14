@@ -14,5 +14,22 @@ namespace StreamVaultAdmin.Models
             TrackCount = int.TryParse(form["TrackCount"], out int t) ? t : 0;
             RecordLabel = form["RecordLabel"].ToString() ?? string.Empty;
         }
+
+        // MusicAlbum knows how to validate its own fields
+        public override List<string> ValidateTypeFields()
+        {
+            var errors = new List<string>();
+
+            if (string.IsNullOrEmpty(Artist))
+                errors.Add("Artist is required");
+
+            if (TrackCount <= 0)
+                errors.Add("Track Count must be greater than 0");
+
+            if (string.IsNullOrEmpty(RecordLabel))
+                errors.Add("Record Label is required");
+
+            return errors;
+        }
     }
 }

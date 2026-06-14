@@ -3,6 +3,16 @@
     string type = ViewBag.Type as string ?? "";
 }
 
+@if (ViewBag.Errors != null)
+{
+    <ul style="color:red;">
+        @foreach (var error in ViewBag.Errors)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
+
 <h2>Add New @type</h2>
 
 <a href="/Catalogue">Back to Catalogue</a>
@@ -15,22 +25,22 @@
 
     <p>
         <label>Title</label><br />
-        <input type="text" name="Title" required />
+        <input type="text" name="Title" value="@ViewBag.FormData?["Title"]" />
     </p>
 
     <p>
         <label>Description</label><br />
-        <textarea name="Description" rows="3" cols="50" required></textarea>
+        <textarea name="Description" rows="3" cols="50">@ViewBag.FormData?["Description"]</textarea>
     </p>
 
     <p>
         <label>Release Date</label><br />
-        <input type="date" name="ReleaseDate" required />
+        <input type="date" name="ReleaseDate" value="@ViewBag.FormData?["ReleaseDate"]" />
     </p>
 
     <p>
         <label>Age Rating</label><br />
-        <select name="AgeRating" required>
+        <select name="AgeRating">
             <option value="">Select...</option>
             <option>U</option>
             <option>PG</option>
@@ -43,7 +53,7 @@
 
     <p>
         <label>Genre</label><br />
-        <input type="text" name="Genre" required />
+        <input type="text" name="Genre" value="@ViewBag.FormData?["Genre"]" />
     </p>
 
     <h4>@type Details</h4>
@@ -52,52 +62,52 @@
     {
         <p>
             <label>Duration (minutes)</label><br />
-            <input type="number" name="Duration" min="1" required />
+            <input type="number" name="Duration" min="1" value="@ViewBag.FormData?["Duration"]" />
         </p>
         <p>
             <label>Director</label><br />
-            <input type="text" name="Director" required />
+            <input type="text" name="Director" value="@ViewBag.FormData?["Director"]" />
         </p>
     }
     else if (type == "Series")
     {
         <p>
             <label>Number of Seasons</label><br />
-            <input type="number" name="NumberOfSeasons" min="1" required />
+            <input type="number" name="NumberOfSeasons" min="1" value="@ViewBag.FormData?["NumberOfSeasons"]" />
         </p>
         <p>
             <label>Total Episodes</label><br />
-            <input type="number" name="TotalEpisodes" min="1" required />
+            <input type="number" name="TotalEpisodes" min="1" value="@ViewBag.FormData?["TotalEpisodes"]" />
         </p>
     }
     else if (type == "Audiobook")
     {
         <p>
             <label>Author</label><br />
-            <input type="text" name="Author" required />
+            <input type="text" name="Author" value="@ViewBag.FormData?["Author"]" />
         </p>
         <p>
             <label>Narrator</label><br />
-            <input type="text" name="Narrator" required />
+            <input type="text" name="Narrator" value="@ViewBag.FormData?["Narrator"]" />
         </p>
         <p>
             <label>Duration (minutes)</label><br />
-            <input type="number" name="Duration" min="1" required />
+            <input type="number" name="Duration" min="1" value="@ViewBag.FormData?["Duration"]" />
         </p>
     }
     else if (type == "MusicAlbum")
     {
         <p>
             <label>Artist</label><br />
-            <input type="text" name="Artist" required />
+            <input type="text" name="Artist" value="@ViewBag.FormData?["Artist"]" />
         </p>
         <p>
             <label>Track Count</label><br />
-            <input type="number" name="TrackCount" min="1" required />
+            <input type="number" name="TrackCount" min="1" value="@ViewBag.FormData?["TrackCount"]" />
         </p>
         <p>
             <label>Record Label</label><br />
-            <input type="text" name="RecordLabel" required />
+            <input type="text" name="RecordLabel" value="@ViewBag.FormData?["RecordLabel"]" />
         </p>
     }
 
