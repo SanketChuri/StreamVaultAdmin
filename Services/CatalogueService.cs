@@ -44,7 +44,7 @@ namespace StreamVaultAdmin.Services
                 return items;
 
             return items
-                .Where(x => x.Title.Contains(search))
+                .Where(x => x.Title.Contains(search, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
 
