@@ -1,123 +1,109 @@
 @{
-    ViewData["Title"] = "Add New " + ViewBag.Type;
-    string type = ViewBag.Type;
+    ViewData["Title"] = "Add New";
+    string type = ViewBag.Type as string ?? "";
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Add New @type</h1>
-        <a href="/Catalogue" class="btn btn-secondary">Back to Catalogue</a>
-    </div>
+<h2>Add New @type</h2>
 
-    <div class="card">
-        <div class="card-body">
-            <form method="post" action="/Catalogue/Create?type=@type">
+<a href="/Catalogue">Back to Catalogue</a>
 
-                <h5 class="mb-3">General Information</h5>
+<br /><br />
 
-                <div class="mb-3">
-                    <label class="form-label">Title *</label>
-                    <input type="text" name="Title" class="form-control" required />
-                </div>
+<form method="post" action="/Catalogue/Create?type=@type">
 
-                <div class="mb-3">
-                    <label class="form-label">Description *</label>
-                    <textarea name="Description" class="form-control" rows="3" required></textarea>
-                </div>
+    <h4>General</h4>
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Release Date *</label>
-                        <input type="date" name="ReleaseDate" class="form-control" required />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Age Rating *</label>
-                        <select name="AgeRating" class="form-select" required>
-                            <option value="">Select...</option>
-                            <option>U</option>
-                            <option>PG</option>
-                            <option>12</option>
-                            <option>12A</option>
-                            <option>15</option>
-                            <option>18</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Genre *</label>
-                        <input type="text" name="Genre" class="form-control" required />
-                    </div>
-                </div>
+    <p>
+        <label>Title</label><br />
+        <input type="text" name="Title" required />
+    </p>
 
-                <hr />
-                <h5 class="mb-3">@type Details</h5>
+    <p>
+        <label>Description</label><br />
+        <textarea name="Description" rows="3" cols="50" required></textarea>
+    </p>
 
-                @if (type == "Movie")
-                {
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Duration (minutes) *</label>
-                            <input type="number" name="Duration" class="form-control" min="1" required />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Director *</label>
-                            <input type="text" name="Director" class="form-control" required />
-                        </div>
-                    </div>
-                }
-                else if (type == "Series")
-                {
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Number of Seasons *</label>
-                            <input type="number" name="NumberOfSeasons" class="form-control" min="1" required />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Total Episodes *</label>
-                            <input type="number" name="TotalEpisodes" class="form-control" min="1" required />
-                        </div>
-                    </div>
-                }
-                else if (type == "Audiobook")
-                {
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Author *</label>
-                            <input type="text" name="Author" class="form-control" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Narrator *</label>
-                            <input type="text" name="Narrator" class="form-control" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Duration (minutes) *</label>
-                            <input type="number" name="Duration" class="form-control" min="1" required />
-                        </div>
-                    </div>
-                }
-                else if (type == "MusicAlbum")
-                {
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Artist *</label>
-                            <input type="text" name="Artist" class="form-control" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Track Count *</label>
-                            <input type="number" name="TrackCount" class="form-control" min="1" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Record Label *</label>
-                            <input type="text" name="RecordLabel" class="form-control" required />
-                        </div>
-                    </div>
-                }
+    <p>
+        <label>Release Date</label><br />
+        <input type="date" name="ReleaseDate" required />
+    </p>
 
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <a href="/Catalogue" class="btn btn-secondary ms-2">Cancel</a>
-                </div>
+    <p>
+        <label>Age Rating</label><br />
+        <select name="AgeRating" required>
+            <option value="">Select...</option>
+            <option>U</option>
+            <option>PG</option>
+            <option>12</option>
+            <option>12A</option>
+            <option>15</option>
+            <option>18</option>
+        </select>
+    </p>
 
-            </form>
-        </div>
-    </div>
-</div>
+    <p>
+        <label>Genre</label><br />
+        <input type="text" name="Genre" required />
+    </p>
+
+    <h4>@type Details</h4>
+
+    @if (type == "Movie")
+    {
+        <p>
+            <label>Duration (minutes)</label><br />
+            <input type="number" name="Duration" min="1" required />
+        </p>
+        <p>
+            <label>Director</label><br />
+            <input type="text" name="Director" required />
+        </p>
+    }
+    else if (type == "Series")
+    {
+        <p>
+            <label>Number of Seasons</label><br />
+            <input type="number" name="NumberOfSeasons" min="1" required />
+        </p>
+        <p>
+            <label>Total Episodes</label><br />
+            <input type="number" name="TotalEpisodes" min="1" required />
+        </p>
+    }
+    else if (type == "Audiobook")
+    {
+        <p>
+            <label>Author</label><br />
+            <input type="text" name="Author" required />
+        </p>
+        <p>
+            <label>Narrator</label><br />
+            <input type="text" name="Narrator" required />
+        </p>
+        <p>
+            <label>Duration (minutes)</label><br />
+            <input type="number" name="Duration" min="1" required />
+        </p>
+    }
+    else if (type == "MusicAlbum")
+    {
+        <p>
+            <label>Artist</label><br />
+            <input type="text" name="Artist" required />
+        </p>
+        <p>
+            <label>Track Count</label><br />
+            <input type="number" name="TrackCount" min="1" required />
+        </p>
+        <p>
+            <label>Record Label</label><br />
+            <input type="text" name="RecordLabel" required />
+        </p>
+    }
+
+    <p>
+        <button type="submit">Save</button>
+        <a href="/Catalogue">Cancel</a>
+    </p>
+
+</form>

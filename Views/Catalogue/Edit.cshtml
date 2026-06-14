@@ -2,136 +2,117 @@
 @using StreamVaultAdmin.Models
 
 @{
-    ViewData["Title"] = "Edit " + Model.Title;
+    ViewData["Title"] = "Edit";
     string type = Model.ContentType;
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Edit @type</h1>
-        <a href="/Catalogue" class="btn btn-secondary">Back to Catalogue</a>
-    </div>
+<h2>Edit @type</h2>
 
-    <div class="card">
-        <div class="card-body">
-            <form method="post" action="/Catalogue/Edit/@Model.Id">
+<a href="/Catalogue">Back to Catalogue</a>
 
-                <h5 class="mb-3">General Information</h5>
+<br /><br />
 
-                <div class="mb-3">
-                    <label class="form-label">Title *</label>
-                    <input type="text" name="Title" class="form-control"
-                           value="@Model.Title" required />
-                </div>
+<form method="post" action="/Catalogue/Edit/@Model.Id">
 
-                <div class="mb-3">
-                    <label class="form-label">Description *</label>
-                    <textarea name="Description" class="form-control" rows="3" required>@Model.Description</textarea>
-                </div>
+    <h4>General</h4>
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Release Date *</label>
-                        <input type="date" name="ReleaseDate" class="form-control"
-                               value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" required />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Age Rating *</label>
-                        <select name="AgeRating" class="form-select" required>
-                            <option value="">Select...</option>
-                            @foreach (var rating in new[] { "U", "PG", "12", "12A", "15", "18" })
-                            {
-                                <!option @(Model.AgeRating == rating ? "selected" : "")>@rating</!option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Genre *</label>
-                        <input type="text" name="Genre" class="form-control"
-                               value="@Model.Genre" required />
-                    </div>
-                </div>
+    <p>
+        <label>Title</label><br />
+        <input type="text" name="Title" value="@Model.Title" required />
+    </p>
 
-                <hr />
-                <h5 class="mb-3">@type Details</h5>
+    <p>
+        <label>Description</label><br />
+        <textarea name="Description" rows="3" cols="50" required>@Model.Description</textarea>
+    </p>
 
-                @if (Model is Movie movie)
+    <p>
+        <label>Release Date</label><br />
+        <input type="date" name="ReleaseDate"
+               value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" required />
+    </p>
+
+    <p>
+        <label>Age Rating</label><br />
+        <select name="AgeRating" required>
+            <option value="">Select...</option>
+            @foreach (var rating in new[] { "U", "PG", "12", "12A", "15", "18" })
+            {
+                @if (Model.AgeRating == rating)
                 {
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Duration (minutes) *</label>
-                            <input type="number" name="Duration" class="form-control"
-                                   value="@movie.Duration" min="1" required />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Director *</label>
-                            <input type="text" name="Director" class="form-control"
-                                   value="@movie.Director" required />
-                        </div>
-                    </div>
+                    <option selected>@rating</option>
                 }
-                else if (Model is Series series)
+                else
                 {
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Number of Seasons *</label>
-                            <input type="number" name="NumberOfSeasons" class="form-control"
-                                   value="@series.NumberOfSeasons" min="1" required />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Total Episodes *</label>
-                            <input type="number" name="TotalEpisodes" class="form-control"
-                                   value="@series.TotalEpisodes" min="1" required />
-                        </div>
-                    </div>
+                    <option>@rating</option>
                 }
-                else if (Model is Audiobook audiobook)
-                {
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Author *</label>
-                            <input type="text" name="Author" class="form-control"
-                                   value="@audiobook.Author" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Narrator *</label>
-                            <input type="text" name="Narrator" class="form-control"
-                                   value="@audiobook.Narrator" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Duration (minutes) *</label>
-                            <input type="number" name="Duration" class="form-control"
-                                   value="@audiobook.Duration" min="1" required />
-                        </div>
-                    </div>
-                }
-                else if (Model is MusicAlbum album)
-                {
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Artist *</label>
-                            <input type="text" name="Artist" class="form-control"
-                                   value="@album.Artist" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Track Count *</label>
-                            <input type="number" name="TrackCount" class="form-control"
-                                   value="@album.TrackCount" min="1" required />
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Record Label *</label>
-                            <input type="text" name="RecordLabel" class="form-control"
-                                   value="@album.RecordLabel" required />
-                        </div>
-                    </div>
-                }
+            }
+        </select>
+    </p>
 
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-warning">Update</button>
-                    <a href="/Catalogue" class="btn btn-secondary ms-2">Cancel</a>
-                </div>
+    <p>
+        <label>Genre</label><br />
+        <input type="text" name="Genre" value="@Model.Genre" required />
+    </p>
 
-            </form>
-        </div>
-    </div>
-</div>
+    <h4>@type Details</h4>
+
+    @if (Model is Movie movie)
+    {
+        <p>
+            <label>Duration (minutes)</label><br />
+            <input type="number" name="Duration" value="@movie.Duration" min="1" required />
+        </p>
+        <p>
+            <label>Director</label><br />
+            <input type="text" name="Director" value="@movie.Director" required />
+        </p>
+    }
+    else if (Model is Series series)
+    {
+        <p>
+            <label>Number of Seasons</label><br />
+            <input type="number" name="NumberOfSeasons" value="@series.NumberOfSeasons" min="1" required />
+        </p>
+        <p>
+            <label>Total Episodes</label><br />
+            <input type="number" name="TotalEpisodes" value="@series.TotalEpisodes" min="1" required />
+        </p>
+    }
+    else if (Model is Audiobook audiobook)
+    {
+        <p>
+            <label>Author</label><br />
+            <input type="text" name="Author" value="@audiobook.Author" required />
+        </p>
+        <p>
+            <label>Narrator</label><br />
+            <input type="text" name="Narrator" value="@audiobook.Narrator" required />
+        </p>
+        <p>
+            <label>Duration (minutes)</label><br />
+            <input type="number" name="Duration" value="@audiobook.Duration" min="1" required />
+        </p>
+    }
+    else if (Model is MusicAlbum album)
+    {
+        <p>
+            <label>Artist</label><br />
+            <input type="text" name="Artist" value="@album.Artist" required />
+        </p>
+        <p>
+            <label>Track Count</label><br />
+            <input type="number" name="TrackCount" value="@album.TrackCount" min="1" required />
+        </p>
+        <p>
+            <label>Record Label</label><br />
+            <input type="text" name="RecordLabel" value="@album.RecordLabel" required />
+        </p>
+    }
+
+    <p>
+        <button type="submit">Update</button>
+        <a href="/Catalogue">Cancel</a>
+    </p>
+
+</form>
