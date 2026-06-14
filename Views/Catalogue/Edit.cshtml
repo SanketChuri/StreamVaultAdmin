@@ -12,29 +12,39 @@
 
 <br /><br />
 
+@if (ViewBag.Errors != null)
+{
+    <ul style="color:red;">
+        @foreach (var error in ViewBag.Errors)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
+
 <form method="post" action="/Catalogue/Edit/@Model.Id">
 
     <h4>General</h4>
 
     <p>
         <label>Title</label><br />
-        <input type="text" name="Title" value="@Model.Title" required />
+        <input type="text" name="Title" value="@Model.Title" />
     </p>
 
     <p>
         <label>Description</label><br />
-        <textarea name="Description" rows="3" cols="50" required>@Model.Description</textarea>
+        <textarea name="Description" rows="3" cols="50">@Model.Description</textarea>
     </p>
 
     <p>
         <label>Release Date</label><br />
         <input type="date" name="ReleaseDate"
-               value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" required />
+               value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" />
     </p>
 
     <p>
         <label>Age Rating</label><br />
-        <select name="AgeRating" required>
+        <select name="AgeRating">
             <option value="">Select...</option>
             @foreach (var rating in new[] { "U", "PG", "12", "12A", "15", "18" })
             {
@@ -52,7 +62,7 @@
 
     <p>
         <label>Genre</label><br />
-        <input type="text" name="Genre" value="@Model.Genre" required />
+        <input type="text" name="Genre" value="@Model.Genre" />
     </p>
 
     <h4>@type Details</h4>
@@ -61,52 +71,52 @@
     {
         <p>
             <label>Duration (minutes)</label><br />
-            <input type="number" name="Duration" value="@movie.Duration" min="1" required />
+            <input type="number" name="Duration" value="@movie.Duration" min="1" />
         </p>
         <p>
             <label>Director</label><br />
-            <input type="text" name="Director" value="@movie.Director" required />
+            <input type="text" name="Director" value="@movie.Director" />
         </p>
     }
     else if (Model is Series series)
     {
         <p>
             <label>Number of Seasons</label><br />
-            <input type="number" name="NumberOfSeasons" value="@series.NumberOfSeasons" min="1" required />
+            <input type="number" name="NumberOfSeasons" value="@series.NumberOfSeasons" min="1" />
         </p>
         <p>
             <label>Total Episodes</label><br />
-            <input type="number" name="TotalEpisodes" value="@series.TotalEpisodes" min="1" required />
+            <input type="number" name="TotalEpisodes" value="@series.TotalEpisodes" min="1" />
         </p>
     }
     else if (Model is Audiobook audiobook)
     {
         <p>
             <label>Author</label><br />
-            <input type="text" name="Author" value="@audiobook.Author" required />
+            <input type="text" name="Author" value="@audiobook.Author" />
         </p>
         <p>
             <label>Narrator</label><br />
-            <input type="text" name="Narrator" value="@audiobook.Narrator" required />
+            <input type="text" name="Narrator" value="@audiobook.Narrator" />
         </p>
         <p>
             <label>Duration (minutes)</label><br />
-            <input type="number" name="Duration" value="@audiobook.Duration" min="1" required />
+            <input type="number" name="Duration" value="@audiobook.Duration" min="1" />
         </p>
     }
     else if (Model is MusicAlbum album)
     {
         <p>
             <label>Artist</label><br />
-            <input type="text" name="Artist" value="@album.Artist" required />
+            <input type="text" name="Artist" value="@album.Artist" />
         </p>
         <p>
             <label>Track Count</label><br />
-            <input type="number" name="TrackCount" value="@album.TrackCount" min="1" required />
+            <input type="number" name="TrackCount" value="@album.TrackCount" min="1" />
         </p>
         <p>
             <label>Record Label</label><br />
-            <input type="text" name="RecordLabel" value="@album.RecordLabel" required />
+            <input type="text" name="RecordLabel" value="@album.RecordLabel" />
         </p>
     }
 
