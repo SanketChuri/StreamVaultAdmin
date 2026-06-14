@@ -14,6 +14,7 @@ namespace StreamVaultAdmin.Controllers
         }
 
         // GET: /Catalogue
+        // Show the catalogue list with optional filter and search
         public IActionResult Index(string? type = null, string? search = null)
         {
             var items = _service.GetAll(type, search);
@@ -22,25 +23,22 @@ namespace StreamVaultAdmin.Controllers
             return View(items);
         }
 
-        // GET: /Catalogue/Create
+        // GET: /Catalogue/Create?type=Movie
+        // Show the empty create form
         public IActionResult Create(string type)
         {
             ViewBag.Type = type;
             return View();
         }
 
-        // POST: /Catalogue/Create
+        // POST: /Catalogue/Create?type=Movie
+        // Save the new item to the database
         [HttpPost]
         public IActionResult Create(string type, IFormCollection form)
         {
-            ContentItem item = type switch
-            {
-                "Movie"      => new Movie(),
-                "Series"     => new Series(),
-                "Audiobook"  => new Audiobook(),
-                "MusicAlbum" => new MusicAlbum(),
-                _            => throw new ArgumentException("Invalid type")
-            };
+            var item = CreateEmptyItem(type);
+            if (item == null)
+                return RedirectToAction("Index");
 
             item.UpdateSharedFields(form);
             item.UpdateTypeFields(form);
@@ -50,6 +48,7 @@ namespace StreamVaultAdmin.Controllers
         }
 
         // GET: /Catalogue/Edit/1
+        // Show the edit form pre-filled with existing data
         public IActionResult Edit(int id)
         {
             var item = _service.GetById(id);
@@ -58,6 +57,7 @@ namespace StreamVaultAdmin.Controllers
         }
 
         // POST: /Catalogue/Edit/1
+        // Save the updated item to the database
         [HttpPost]
         public IActionResult Edit(int id, IFormCollection form)
         {
@@ -72,6 +72,7 @@ namespace StreamVaultAdmin.Controllers
         }
 
         // GET: /Catalogue/Delete/1
+        // Show the delete confirmation page
         public IActionResult Delete(int id)
         {
             var item = _service.GetById(id);
@@ -80,11 +81,23 @@ namespace StreamVaultAdmin.Controllers
         }
 
         // POST: /Catalogue/Delete/1
+        // Delete the item from the database
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
             _service.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        // Create the right empty object based on type
+        // Kept in one place so type checking is not scattered
+        private ContentItem? CreateEmptyItem(string type)
+        {
+            if (type == "Movie")      return new Movie();
+            if (type == "Series")     return new Series();
+            if (type == "Audiobook")  return new Audiobook();
+            if (type == "MusicAlbum") return new MusicAlbum();
+            return null;
         }
     }
 }
