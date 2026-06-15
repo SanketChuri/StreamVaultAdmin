@@ -58,17 +58,42 @@ namespace StreamVaultAdmin.Services
         }
 
         // Sort items by column
+        // private List<ContentItem> SortItems(List<ContentItem> items, string? sortBy)
+        // {
+        //     if (string.IsNullOrEmpty(sortBy))
+        //         return items;
+
+        //     if (sortBy == "title")      return items.OrderBy(x => x.Title).ToList();
+        //     if (sortBy == "title_desc") return items.OrderByDescending(x => x.Title).ToList();
+        //     if (sortBy == "contenttype")       return items.OrderBy(x => x.ContentType).ToList();
+        //     if (sortBy == "contenttype_desc")  return items.OrderByDescending(x => x.ContentType).ToList();
+        //     if (sortBy == "date")       return items.OrderBy(x => x.ReleaseDate).ToList();
+        //     if (sortBy == "date_desc")  return items.OrderByDescending(x => x.ReleaseDate).ToList();
+
+        //     return items;
+        // }
         private List<ContentItem> SortItems(List<ContentItem> items, string? sortBy)
         {
             if (string.IsNullOrEmpty(sortBy))
                 return items;
 
-            if (sortBy == "title")      return items.OrderBy(x => x.Title).ToList();
-            if (sortBy == "title_desc") return items.OrderByDescending(x => x.Title).ToList();
-            if (sortBy == "type")       return items.OrderBy(x => x.ContentType).ToList();
-            if (sortBy == "type_desc")  return items.OrderByDescending(x => x.ContentType).ToList();
-            if (sortBy == "date")       return items.OrderBy(x => x.ReleaseDate).ToList();
-            if (sortBy == "date_desc")  return items.OrderByDescending(x => x.ReleaseDate).ToList();
+            if (sortBy == "title")
+                return items.OrderBy(x => x.Title.ToLower()).ToList();
+
+            if (sortBy == "title_desc")
+                return items.OrderByDescending(x => x.Title.ToLower()).ToList();
+
+            if (sortBy == "contenttype")
+                return items.OrderBy(x => x.ContentType.ToLower()).ToList();
+
+            if (sortBy == "contenttype_desc")
+                return items.OrderByDescending(x => x.ContentType.ToLower()).ToList();
+
+            if (sortBy == "date")
+                return items.OrderBy(x => x.ReleaseDate).ToList();
+
+            if (sortBy == "date_desc")
+                return items.OrderByDescending(x => x.ReleaseDate).ToList();
 
             return items;
         }

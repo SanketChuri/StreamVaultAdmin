@@ -20,7 +20,7 @@ namespace StreamVaultAdmin.Controllers
             var items = _service.GetAll(type, search, sortBy);
             ViewBag.CurrentType = type;
             ViewBag.CurrentSearch = search;
-            ViewBag.SortBy = sortBy;
+            ViewBag.CurrentSort = sortBy;
             return View(items);
         }
 
