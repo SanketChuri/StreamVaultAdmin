@@ -133,3 +133,13 @@ I used a three branch strategy for this project:
 3. `production` — release ready version, merged from main
 
 All commits were made on the `dev` branch first. Once the project was complete everything was merged forward into `main` and then `production`.
+
+## Future Updates
+
+Here are some things I would add if I had more time:
+
+1. Pagination — right now all items load at once. If the catalogue grows to hundreds of items the page would get very slow. I would add pagination to show maybe 20 items per page.
+2. Unit Tests — I would write tests for the service layer especially the filtering, search and sorting logic to make sure they always work correctly.
+3. Global Unique IDs — right now each content type has its own ID sequence starting from 1. I worked around this by passing the type in the URL but a better fix would be to use a single global ID sequence across all types.
+4. Search Improvements — currently search only works on Title. It would be useful to search Description and Genre as well.
+5. Sorting Improvements — currently you can sort by Title, Type and Release Date. Adding sort by Genre and Age Rating would be useful.
