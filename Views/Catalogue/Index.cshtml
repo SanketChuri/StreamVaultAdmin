@@ -4,18 +4,27 @@
     ViewData["Title"] = "Catalogue";
     string currentType = ViewBag.CurrentType as string ?? "";
     string currentSearch = ViewBag.CurrentSearch as string ?? "";
+    string currentSort = ViewBag.CurrentSort as string ?? "";
 }
 
 <h2>Catalogue</h2>
 
+@if (TempData["Success"] != null)
+{
+    <p style="color:green;">@TempData["Success"]</p>
+}
+
 <form method="get" action="/Catalogue">
-    <select name="type">
+    <input type="hidden" name="sortBy" value="@currentSort" />
+
+    <!select name="type">
         <option value="">All Types</option>
         <!option value="Movie"      @(currentType == "Movie"      ? "selected" : "")>Movie</!option>
         <!option value="Series"     @(currentType == "Series"     ? "selected" : "")>Series</!option>
         <!option value="Audiobook"  @(currentType == "Audiobook"  ? "selected" : "")>Audiobook</!option>
         <!option value="MusicAlbum" @(currentType == "MusicAlbum" ? "selected" : "")>Music Album</!option>
-    </select>
+    </!select>
+
     <input type="text" name="search" placeholder="Search by title..." value="@currentSearch" />
     <button type="submit">Search</button>
 </form>
@@ -31,6 +40,8 @@
     </select>
 </p>
 
+<p>Showing @Model.Count() item(s)</p>
+
 @if (!Model.Any())
 {
     <p>No content found.</p>
@@ -39,11 +50,23 @@ else
 {
     <table border="1" cellpadding="6">
         <tr>
-            <th>Title</th>
-            <th>Type</th>
+            <th>
+                <a href="/Catalogue?sortBy=@(currentSort == "title" ? "title_desc" : "title")&type=@currentType&search=@currentSearch">Title</a>
+                @if (currentSort == "title") { <text>▲</text> }
+                @if (currentSort == "title_desc") { <text>▼</text> }
+            </th>
+            <th>
+                <a href="/Catalogue?sortBy=@(currentSort == "type" ? "type_desc" : "type")&type=@currentType&search=@currentSearch">Type</a>
+                @if (currentSort == "type") { <text>▲</text> }
+                @if (currentSort == "type_desc") { <text>▼</text> }
+            </th>
             <th>Genre</th>
             <th>Age Rating</th>
-            <th>Release Date</th>
+            <th>
+                <a href="/Catalogue?sortBy=@(currentSort == "date" ? "date_desc" : "date")&type=@currentType&search=@currentSearch">Release Date</a>
+                @if (currentSort == "date") { <text>▲</text> }
+                @if (currentSort == "date_desc") { <text>▼</text> }
+            </th>
             <th>Actions</th>
         </tr>
         @foreach (var item in Model)

@@ -15,11 +15,12 @@ namespace StreamVaultAdmin.Controllers
 
         // GET: /Catalogue
         // Show the catalogue list with optional filter and search
-        public IActionResult Index(string? type = null, string? search = null)
+        public IActionResult Index(string? type = null, string? search = null,string? sortBy = null)
         {
-            var items = _service.GetAll(type, search);
+            var items = _service.GetAll(type, search, sortBy);
             ViewBag.CurrentType = type;
             ViewBag.CurrentSearch = search;
+            ViewBag.SortBy = sortBy;
             return View(items);
         }
 
@@ -43,11 +44,9 @@ namespace StreamVaultAdmin.Controllers
             item.UpdateSharedFields(form);
             item.UpdateTypeFields(form);
 
-            // Validate shared and type specific fields
             var errors = item.ValidateSharedFields();
             errors.AddRange(item.ValidateTypeFields());
 
-            // If errors found send back to form with error messages
             if (errors.Any())
             {
                 ViewBag.Errors = errors;
@@ -57,34 +56,24 @@ namespace StreamVaultAdmin.Controllers
             }
 
             _service.Add(item);
+            TempData["Success"] = item.Title + " was added successfully!";
             return RedirectToAction("Index");
         }
 
-        // GET: /Catalogue/Edit/1?type=Movie
-        // Show the edit form pre-filled with existing data
-        public IActionResult Edit(int id, string type)
-        {
-            var item = _service.GetById(id, type);
-            if (item == null) return NotFound();
-            return View(item);
-        }
-
-        // POST: /Catalogue/Edit/1
+        // POST: /Catalogue/Edit/1?type=Movie
         // Save the updated item to the database
         [HttpPost]
-        public IActionResult Edit(int id, IFormCollection form)
+        public IActionResult Edit(int id, string type, IFormCollection form)
         {
-            var item = _service.GetById(id, form["ContentType"]);
+            var item = _service.GetById(id, type);
             if (item == null) return NotFound();
 
             item.UpdateSharedFields(form);
             item.UpdateTypeFields(form);
 
-            // Validate shared and type specific fields
             var errors = item.ValidateSharedFields();
             errors.AddRange(item.ValidateTypeFields());
 
-            // If errors found send back to form with error messages
             if (errors.Any())
             {
                 ViewBag.Errors = errors;
@@ -92,16 +81,8 @@ namespace StreamVaultAdmin.Controllers
             }
 
             _service.Update(item);
+            TempData["Success"] = item.Title + " was updated successfully!";
             return RedirectToAction("Index");
-        }
-
-        // GET: /Catalogue/Delete/1?type=Movie
-        // Show the delete confirmation page
-        public IActionResult Delete(int id, string type)
-        {
-            var item = _service.GetById(id, type);
-            if (item == null) return NotFound();
-            return View(item);
         }
 
         // POST: /Catalogue/Delete/1?type=Movie
@@ -110,6 +91,7 @@ namespace StreamVaultAdmin.Controllers
         public IActionResult DeleteConfirmed(int id, string type)
         {
             _service.Delete(id, type);
+            TempData["Success"] = "Item was deleted successfully!";
             return RedirectToAction("Index");
         }
 
