@@ -31,5 +31,10 @@ namespace StreamVaultAdmin.Models
 
             return errors;
         }
+
+        public override string GetDetails()
+        {
+            return Author + " | " + Narrator + " | " + Duration + " mins";
+        }
     }
 }

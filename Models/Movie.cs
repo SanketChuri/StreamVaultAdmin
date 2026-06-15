@@ -26,5 +26,10 @@ namespace StreamVaultAdmin.Models
 
             return errors;
         }
+
+        public override string GetDetails()
+        {
+            return Duration + " mins | " + Director;
+        }   
     }
 }

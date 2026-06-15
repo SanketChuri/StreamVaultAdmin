@@ -66,6 +66,7 @@ else
                 @if (currentSort == "date") { <text>▲</text> }
                 @if (currentSort == "date_desc") { <text>▼</text> }
             </th>
+            <th>Details</th>
             <th>Actions</th>
         </tr>
         @foreach (var item in Model)
@@ -76,6 +77,7 @@ else
                 <td>@item.Genre</td>
                 <td>@item.AgeRating</td>
                 <td>@item.ReleaseDate.ToString("dd MMM yyyy")</td>
+                <td>@item.GetDetails()</td>
                 <td>
                     <a href="/Catalogue/Edit/@item.Id?type=@item.ContentType">Edit</a> |
                     <a href="/Catalogue/Delete/@item.Id?type=@item.ContentType">Delete</a>

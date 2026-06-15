@@ -26,6 +26,11 @@ namespace StreamVaultAdmin.Models
 
             return errors;
         }
+        
+        public override string GetDetails()
+        {
+            return NumberOfSeasons + " seasons | " + TotalEpisodes + " episodes";
+        }
     }
 
     

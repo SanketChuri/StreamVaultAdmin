@@ -13,6 +13,8 @@ namespace StreamVaultAdmin.Models
 
         // Each content type returns its own name
         public abstract string ContentType { get; }
+        // Each type returns a short summary of its specific fields
+        public abstract string GetDetails();
 
         // Shared fields are updated here once, not repeated in every child
         public void UpdateSharedFields(IFormCollection form)
