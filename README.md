@@ -61,10 +61,10 @@ The tradeoff with Table Per Hierarchy is that some columns will be NULL for rows
 
 ### Separation of Concerns
 
-- Controllers are kept thin. They only receive requests, call the service and return views
-- CatalogueService handles all data access and filtering
-- Each model class handles its own field updates and validation
-- The seeder is in its own class in the Data folder
+1. Controllers are kept thin. They only receive requests, call the service and return views
+2. CatalogueService handles all data access and filtering
+3. Each model class handles its own field updates and validation
+4. The seeder is in its own class in the Data folder
 
 ## What I Would Add Next
 
