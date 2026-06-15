@@ -2,17 +2,17 @@
 
 A simple internal admin tool to manage the StreamVault streaming platform catalogue. Built as part of a technical test using ASP.NET Core MVC.
 
+## Requirements
+
+1. .NET 8 SDK installed
+2. Download from https://dotnet.microsoft.com/download/dotnet/8.0
+
 ## How to Run
 
-1. Clone the repository
-2. Open a terminal and navigate to the project folder
-3. Run this command:
-
-```bash
-dotnet run
-```
-
-4. Open your browser and go to `http://localhost:5245/Catalogue`
+1. Clone the repository.
+2. Open a terminal and navigate to the project folder.
+3. Run this command: dotnet run.
+4. Open your browser and go to `http://localhost:5245/Catalogue`.
 
 No database setup needed. The database is created and filled with sample data automatically when you run the app for the first time.
 
@@ -36,10 +36,10 @@ All four content types share common fields like Title, Description, Release Date
 
 Each type then adds its own specific fields:
 
-1. Movie adds Duration and Director
-2. Series adds NumberOfSeasons and TotalEpisodes
-3. Audiobook adds Author, Narrator and Duration
-4. MusicAlbum adds Artist, TrackCount and RecordLabel
+1. Movie adds Duration and Director.
+2. Series adds NumberOfSeasons and TotalEpisodes.
+3. Audiobook adds Author, Narrator and Duration.
+4. MusicAlbum adds Artist, TrackCount and RecordLabel.
 
 I also added three abstract members to the base class:
 
@@ -53,25 +53,25 @@ This means the controller never needs to check what type an item is. It just cal
 
 I chose EF Core for three main reasons:
 
-1. The database needs to be created automatically on first run. EF Core does this in one line using EnsureCreated()
-2. EF Core handles the inheritance mapping automatically using Table Per Hierarchy. All four types go into one table called ContentItems with a Discriminator column that tells EF Core which type each row is
-3. Everything is written in C# so there are no raw SQL strings that could have typos
+1. The database needs to be created automatically on first run. EF Core does this in one line using EnsureCreated().
+2. EF Core handles the inheritance mapping automatically using Table Per Hierarchy. All four types go into one table called ContentItems with a Discriminator column that tells EF Core which type each row is.
+3. Everything is written in C# so there are no raw SQL strings that could have typos.
 
 The tradeoff with Table Per Hierarchy is that some columns will be NULL for rows that do not use them. For example a Series row will have NULL in the Director column. For a catalogue this size that is completely fine.
 
 ### Separation of Concerns
 
-1. Controllers are kept thin. They only receive requests, call the service and return views
-2. CatalogueService handles all data access and filtering
-3. Each model class handles its own field updates and validation
-4. The seeder is in its own class in the Data folder
+1. Controllers are kept thin. They only receive requests, call the service and return views.
+2. CatalogueService handles all data access and filtering.
+3. Each model class handles its own field updates and validation.
+4. The seeder is in its own class in the Data folder.
 
 ## What I Would Add Next
 
-1. Pagination so the list does not get too long as the catalogue grows
-2. A detail view to see all fields of an item without going into edit mode
-3. Unit tests for the service layer especially the filtering and search logic
-4. Move the database connection string into appsettings.json instead of hardcoding it in Program.cs
+1. Pagination so the list does not get too long as the catalogue grows.
+2. A detail view to see all fields of an item without going into edit mode.
+3. Unit tests for the service layer especially the filtering and search logic.
+4. Move the database connection string into appsettings.json instead of hardcoding it in Program.cs.
 
 ## Tech Stack (Technology and Purpose)
 
@@ -128,9 +128,9 @@ StreamVaultAdmin/
 
 I used a three branch strategy for this project:
 
-1. `dev` — all development work happened here
-2. `main` — stable version, merged from dev when features were complete
-3. `production` — release ready version, merged from main
+1. `dev` — all development work happened here.
+2. `main` — stable version, merged from dev when features were complete.
+3. `production` — release ready version, merged from main.
 
 All commits were made on the `dev` branch first. Once the project was complete everything was merged forward into `main` and then `production`.
 

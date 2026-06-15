@@ -8,7 +8,6 @@
 }
 
 <h2>Catalogue</h2>
-<p>Current Sort: @currentSort</p>
 @if (TempData["Success"] != null)
 {
     <p style="color:green;">@TempData["Success"]</p>
@@ -50,24 +49,6 @@ else
 {
     <table border="1" cellpadding="6">
         <tr>
-            @* <th>
-                <a href="/Catalogue?sortBy=@(currentSort == "title" ? "title_desc" : "title")&type=@currentType&search=@currentSearch">Title</a>
-                @if (currentSort == "title") { <text>▲</text> }
-                @if (currentSort == "title_desc") { <text>▼</text> }
-            </th>
-            <th>
-                <a href="/Catalogue?sortBy=@(currentSort == "type" ? "type_desc" : "type")&type=@currentType&search=@currentSearch">Type</a>
-                @if (currentSort == "type") { <text>▲</text> }
-                @if (currentSort == "type_desc") { <text>▼</text> }
-            </th>
-            <th>Genre</th>
-            <th>Age Rating</th>
-            <th>
-                <a href="/Catalogue?sortBy=@(currentSort == "date" ? "date_desc" : "date")&type=@currentType&search=@currentSearch">Release Date</a>
-                @if (currentSort == "date") { <text>▲</text> }
-                @if (currentSort == "date_desc") { <text>▼</text> }
-            </th>
-            <th>Actions</th> *@
             <th>
                 <a href="/Catalogue?sortBy=@(currentSort == "title" ? "title_desc" : "title")&amp;type=@currentType&amp;search=@currentSearch">Title</a>
                 @if (currentSort == "title") { <text>▲</text> }
