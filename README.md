@@ -124,3 +124,12 @@ StreamVaultAdmin/
 2. No authentication — the test spec says to assume the user is already logged in.
 3. Search only works on Title — could be extended to search Description and Genre.
 
+## Git Branching Strategy
+
+I used a three branch strategy for this project:
+
+1. `dev` — all development work happened here
+2. `main` — stable version, merged from dev when features were complete
+3. `production` — release ready version, merged from main
+
+All commits were made on the `dev` branch first. Once the project was complete everything was merged forward into `main` and then `production`.
